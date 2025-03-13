@@ -1,0 +1,259 @@
+/* BODY Y CONTENEDOR GENERAL */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+}
+  
+.page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    min-height: 100vh;
+}
+  
+/* HEADER */
+.header {
+    position: relative;
+    width: 60%;
+    background: #1e1e1e;
+    padding: 40px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+  
+/* “L” dorada en la esquina SUPERIOR IZQUIERDA */
+.header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    background:
+      linear-gradient(to right, #FFD700 0%, #FFD700 60%, transparent 100%)
+        top left / 80px 8px no-repeat,
+      linear-gradient(to bottom, #FFD700 0%, #FFD700 60%, transparent 100%)
+        top left / 8px 80px no-repeat;
+}
+  
+/* “L” dorada en la esquina INFERIOR DERECHA */
+.header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background:
+      linear-gradient(to left, #FFD700 0%, #FFD700 60%, transparent 100%)
+        bottom right / 80px 8px no-repeat,
+      linear-gradient(to top, #FFD700 0%, #FFD700 60%, transparent 100%)
+        bottom right / 8px 80px no-repeat;
+}
+  
+.info {
+    flex: 1;
+}
+  
+h1 {
+    font-size: 32px;
+    margin: 10px 0;
+    color: #f1f1f1;
+}
+  
+p {
+    font-size: 20px;
+    margin: 5px 0;
+    color: #cccccc;
+}
+  
+/* Ocultar inicialmente ubicación y descripción */
+.ubicacion,
+.descripcion {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+}
+  
+/* Imagen */
+.photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 20px;
+    border: 3px solid #f1c40f;
+    transition: all 1s ease;
+}
+  
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 15px 20px;
+    font-size: 18px;
+    background: #f1c40f;
+    color: #000;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    transition: opacity 0.5s ease;
+}
+  
+.btn:hover {
+    background: #d4a60b;
+}
+  
+#entrarBtn {
+    opacity: 1;
+}
+  
+#cvBtn {
+    opacity: 0;
+    pointer-events: none;
+}
+  
+/* Animación del header */
+@keyframes moveAndExpand {
+    0% {
+        width: 60%;
+        height: auto;
+    }
+    100% {
+        width: 70%;
+        height: 350px;
+        background: #1e1e1e;
+    }
+}
+  
+.header.animate {
+    animation: moveAndExpand 1s ease forwards;
+}
+  
+.header.animate .photo {
+    width: 250px;
+    height: 250px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+}
+  
+/* Animación para mostrar ubicación y descripción */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+  
+.header.animate .ubicacion,
+.header.animate .descripcion {
+    display: block;
+    animation: fadeIn 0.8s ease forwards;
+    margin-bottom: 10px;
+}
+  
+/* Transición de botones */
+.header.animate #entrarBtn {
+    opacity: 0;
+}
+  
+.header.animate #cvBtn {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0.5s;
+}
+  
+/* BARRA DE NAVEGACIÓN */
+.nav-bar {
+    display: none;      /* Oculto por defecto */
+    opacity: 0;
+    background: #121212;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 900px;
+    transition: opacity 0.5s ease;
+}
+  
+.nav-bar.show {
+    display: block;
+    opacity: 1;
+}
+  
+.nav-bar ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+  
+.nav-bar li {
+    color: #ffffff;
+    cursor: pointer;
+    position: relative;
+    padding: 5px 0;
+    font-size: 18px;
+}
+  
+.nav-bar li:hover {
+    color: #f1c40f;
+}
+  
+.nav-bar li.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #f1c40f;
+}
+  
+/* CARRUSEL */
+.carousel {
+    display: none;
+    opacity: 0;
+    width: 100%;
+    max-width: 900px;
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: opacity 0.5s ease;
+}
+  
+.carousel.show {
+    display: block;
+    opacity: 1;
+}
+  
+.slide {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+}
+  
+.slide.active {
+    display: block;
+}
+
+h2{
+    color: #f1c40f;
+}
+p{
+    color: #d4a60b;
+}
+
+.icono {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}

@@ -1,0 +1,74 @@
+.repo-box {
+  background-color: #2a2a2a;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+  
+  /* Imagen de vista previa */
+  .repo-preview {
+    width: 100%;         /* Ocupa todo el ancho del contenedor */
+    max-width: 400px;    /* Ajusta el tamaño máximo */
+    border-radius: 5px;  /* Esquinas ligeramente redondeadas */
+    display: block;
+    margin: 0 auto 10px; /* Centra la imagen y agrega espacio debajo */
+  }
+  
+  /* Ajusta la apariencia del enlace del proyecto */
+  .repo-box h3 a {
+    color: #f1c40f;
+    text-decoration: none;
+    font-size: 22px;
+  }
+  
+  .repo-box h3 a:hover {
+    color: #fff;          /* Se pone blanco al pasar el mouse */
+  }
+  
+  .repo-box p {
+    font-size: 18px;
+    color: #ccc;
+  }
+
+
+  .carousel {
+    overflow-x: auto;  /* Permite el desplazamiento horizontal */
+    white-space: nowrap; /* Evita que los elementos se vayan abajo */
+    padding: 10px 0;
+  }
+  
+  .carousel-inner {
+    display: flex;  /* Hace que los elementos estén en fila */
+    gap: 15px;  /* Espaciado entre proyectos */
+  }
+  
+  .repo-box {
+    display: inline-block;
+    width: 300px;  /* Ajusta según tu diseño */
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    white-space: normal; /* Permite que el texto haga saltos de línea */
+  }
+  
+  .repo-preview {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto 10px;
+  }
+  
+  .repo-box h3 a {
+    color: #f1c40f;
+    text-decoration: none;
+    font-size: 20px;
+  }
+  
+  .repo-box p {
+    font-size: 16px;
+    color: #ccc;
+  }
+  
+  

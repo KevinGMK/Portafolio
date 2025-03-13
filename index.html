@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sobre Kevin</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/proyect.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- HEADER -->
+    <div class="header" id="header">
+      <div class="info">
+        <h1>Kevin Jose Enrrique</h1>
+        <h1>Huayta Regalado</h1>
+        <h4>Edad: 21 años</h4>
+        <h4 class="ubicacion">📍 Ubicación: Independencia, Lima, Perú</h4>
+        <h4 class="descripcion">
+          Me gusta programar, me apasiona lo que se puede hacer con esfuerzo y códigos,
+          me gusta saber cuanto puede avanzar la tecnología y los programas.
+        </h4>
+        <!-- Botón "Entrar" visible inicialmente -->
+        <button class="btn" id="entrarBtn" onclick="animateHeader()">Entrar</button>
+        <!-- Botón "Mi CV" oculto inicialmente -->
+        <button class="btn" id="cvBtn" onclick="verCV()">Mi CV</button>
+      </div>
+      <img src="img/foto.jpg" alt="Tu Foto" class="photo">
+    </div>
+
+    <!-- BARRA DE NAVEGACIÓN (oculta hasta que acabe la animación) -->
+    <div class="nav-bar" id="navBar">
+      <ul>
+        <li class="active" data-slide="novedades">Novedades</li>
+        <li data-slide="proyectos">Proyectos</li>
+        <li data-slide="contactos">Contactos</li>
+      </ul>
+    </div>
+
+    <!-- CARRUSEL DE CONTENIDOS -->
+    <div class="carousel" id="carousel">
+      <!-- Sección Novedades -->
+      <div class="slide active" id="novedades">
+        <h2>Sobre mi</h2>
+        <p>Programas usados</p>
+        <h3>- Visual Studio Code</h3>
+        <h3>- Godot</h3>
+        <h3>- Blender</h3>
+        <h3>- MariaDB</h3>
+      </div>
+
+      <div class="slide active" id="novedades">
+        <h2>Ultimos proyectos</h2>
+        <div id="repoList"></div>
+      </div>
+      <!-- Sección Proyectos -->
+      <div class="slide" id="proyectos">
+        <div id="terminadosContainer">
+          <h2>Proyectos Terminados</h2>
+          <!-- Se llenará dinámicamente -->
+        </div>
+        
+        <div id="enProcesoContainer">
+          <h2>Proyectos en Proceso</h2>
+          <!-- Se llenará dinámicamente -->
+        </div>
+        
+        <div id="abandonadosContainer">
+          <h2>Proyectos Abandonados</h2>
+          <!-- Se llenará dinámicamente -->
+        </div>
+      </div>
+      <!-- Sección Contactos -->
+      <div class="slide" id="contactos">
+        <h2>Contactos</h2>
+        <ul>
+            <li>
+                <a href="https://wa.me/51981323067" target="_blank">
+                    <img src="img/whatsApp.png" alt="WhatsApp" class="icono"> WhatsApp
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/kevin-jose-enrrique-huayta-regalado-436861255/" target="_blank">
+                    <img src="img/linkedin.png" alt="LinkedIn" class="icono"> LinkedIn
+                </a>
+            </li>
+            <li>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=lidia999.j@gmail.com&su=Consulta%20sobre%20tus%20proyectos&body=Hola,%20me%20gustaría%20saber%20más%20sobre%20tus%20proyectos." target="_blank">
+                    <img src="img/gmail.png" alt="Gmail" class="icono"> Enviar Email
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    </div>
+  </div>
+  <script src="js/proyect.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/api.js"></script>
+</body>
+</html>

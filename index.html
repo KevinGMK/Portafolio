@@ -22,6 +22,8 @@
         </h4>
         <!-- Botón "Entrar" visible inicialmente -->
         <button class="btn" id="entrarBtn" onclick="animateHeader()">Entrar</button>
+        <!-- Botón "Mi CV" oculto inicialmente -->
+        <button class="btn" id="cvBtn" onclick="verCV()">Mi CV</button>
       </div>
       <img src="img/foto.jpg" alt="Tu Foto" class="photo">
     </div>
@@ -39,33 +41,94 @@
     <div class="carousel" id="carousel">
       <!-- Sección Novedades -->
       <div class="slide active" id="novedades">
-        <h2>Sobre mi</h2>
-        <p>Programas usados</p>
-        <h3>- Visual Studio Code</h3>
-        <h3>- Godot</h3>
-        <h3>- Blender</h3>
-        <h3>- MariaDB</h3>
+        <div class="about-wrapper">
+          <!-- Columna 1 – Programas -->
+          <section class="about-box">
+            <h2>Programas usados</h2>
+            <ul>
+              <li>Visual Studio Code</li>
+              <li>Godot</li>
+              <li>Blender</li>
+              <li>MariaDB</li>
+              <li>WordPress</li>
+              <li>GameMaker</li>
+              <li>Unity</li>
+            </ul>
+          </section>
+          <!-- Columna 2 – Lenguajes / Frameworks -->
+          <section class="about-box">
+          <h2>Lenguajes/Frameworks</h2>
+          <ul>
+            <li>JavaScript (ES6+)</li>
+            <li>TypeScript</li>
+            <li>React & React Router</li>
+            <li>Tailwind CSS</li>
+            <li>Flutter</li>
+            <li>Angular</li>
+          </ul>
+          </section>
+          <!-- Columna 3 – Bases de datos -->
+          <section class="about-box">
+          <h2>Bases de datos</h2>
+          <ul>
+            <li>MySQL</li>
+            <li>Firebase</li>
+            <li>Firestore</li>
+          </ul>
+          </section>
+        </div>
       </div>
 
       <div class="slide active" id="novedades">
         <h2>Ultimos proyectos</h2>
         <div id="repoList"></div>
       </div>
+
       <!-- Sección Proyectos -->
-      <div class="slide" id="proyectos">
-        <div id="terminadosContainer">
-          <h2>Proyectos Terminados</h2>
-          <!-- Se llenará dinámicamente -->
+      <div class="slide active" id="proyectos">
+        <div class="section" id="terminadosContainer">
+          <h2 class="section-title">Proyectos Terminados</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow-btn left" aria-label="Scroll left">
+              <div class="arrow-top"></div>
+              <div class="arrow-bottom"></div>
+            </button>
+            <div class="repo-carousel" id="terminadosList"></div>
+            <button class="arrow-btn right" aria-label="Scroll right">
+              <div class="arrow-top"></div>
+              <div class="arrow-bottom"></div>
+            </button>
+          </div>
         </div>
-        
-        <div id="enProcesoContainer">
-          <h2>Proyectos en Proceso</h2>
-          <!-- Se llenará dinámicamente -->
+
+        <div class="section" id="enProcesoContainer">
+          <h2 class="section-title">Proyectos en Proceso</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow-btn left" aria-label="Scroll left">
+              <div class="arrow-top"></div>
+              <div class="arrow-bottom"></div>
+            </button>
+            <div class="repo-carousel" id="enProcesoList"></div>
+            <button class="arrow-btn right" aria-label="Scroll right">
+              <div class="arrow-top"></div>
+              <div class="arrow-bottom"></div>
+            </button>
+          </div>
         </div>
-        
-        <div id="abandonadosContainer">
-          <h2>Proyectos Abandonados</h2>
-          <!-- Se llenará dinámicamente -->
+
+        <div class="section" id="abandonadosContainer">
+          <h2 class="section-title">Proyectos Abandonados</h2>
+          <div class="carousel-wrapper">
+            <button class="arrow-btn left" aria-label="Scroll left">
+              <div class="arrow-top"></div>
+              <div class="arrow-bottom"></div>
+            </button>
+            <div class="repo-carousel" id="abandonadosList"></div>
+            <button class="arrow-btn right" aria-label="Scroll right">
+              <div class="arrow-top"></div>
+              <div class="arrow-bottom"></div>
+            </button>
+          </div>
         </div>
       </div>
       <!-- Sección Contactos -->

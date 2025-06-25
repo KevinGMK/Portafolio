@@ -1,123 +1,112 @@
+const USERNAME = 'KevinGMK';
+const SCROLL_STEP = 150; // px por clic
+
+// 1) Carga y filtra repos
 function loadAllProjects() {
-    const username = 'KevinGMK'; // Tu usuario de GitHub
-    const url = `https://api.github.com/users/${username}/repos?per_page=100`;
+  fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100`)
+    .then(r => r.json())
+    .then(repos => Promise.all(repos.map(fetchRepoData)))
+    .then(repoDataArray => {
+      const terminados  = [];
+      const enProceso   = [];
+      const abandonados = [];
 
-    fetch(url)
-        .then(response => response.json())
-        .then(repos => {
-            return Promise.all(repos.map(repo => fetchRepoData(repo, username)));
-        })
-        .then(repoDataArray => {
-            const terminados = [];
-            const enProceso = [];
-            const abandonados = [];
+      repoDataArray.forEach(data => {
+        if (!data.status) return;
+        switch (data.status) {
+          case 'terminado':   terminados.push(data);   break;
+          case 'en proceso':  enProceso.push(data);    break;
+          case 'abandonado':  abandonados.push(data);  break;
+        }
+      });
 
-            repoDataArray.forEach(data => {
-                switch (data.status) {
-                    case 'terminado':
-                        terminados.push(data);
-                        break;
-                    case 'en proceso':
-                        enProceso.push(data);
-                        break;
-                    case 'abandonado':
-                        abandonados.push(data);
-                        break;
-                    default:
-                        break;
-                }
-            });
-
-            buildProjectLists(terminados, enProceso, abandonados);
-        })
-        .catch(error => console.error('Error cargando repositorios:', error));
+      buildProjectLists(terminados, enProceso, abandonados);
+      setupCarouselButtons();
+    })
+    .catch(err => console.error('Error cargando repositorios:', err));
 }
 
-function fetchRepoData(repo, username) {
-    const statusUrl = `https://raw.githubusercontent.com/${username}/${repo.name}/main/status.txt`;
-    const previewUrl = `https://raw.githubusercontent.com/${username}/${repo.name}/main/preview.png`;
-    const descUrl = `https://raw.githubusercontent.com/${username}/${repo.name}/main/description.txt`;
+// 2) Obtiene status, preview y descripción
+function fetchRepoData(repo) {
+  const base = `https://raw.githubusercontent.com/${USERNAME}/${repo.name}/main/`;
+  const data = { repo, status: null, preview: null, finalDescription: null };
 
-    const data = {
-        repo,
-        preview: null,
-        finalDescription: null,
-        status: null
+  const pStatus = fetch(base + 'status.txt', { method:'HEAD' })
+    .then(r => r.ok && fetch(base + 'status.txt').then(t=>t.text()).then(t=> data.status = t.trim().toLowerCase()))
+    .catch(() => {});
+  const pPrev = fetch(base + 'preview.png', { method:'HEAD' })
+    .then(r => r.ok && (data.preview = base + 'preview.png'))
+    .catch(() => {});
+  const pDesc = fetch(base + 'description.txt', { method:'HEAD' })
+    .then(r => r.ok
+      ? fetch(base + 'description.txt').then(t=>t.text()).then(t=> data.finalDescription = t)
+      : data.finalDescription = repo.description || 'Sin descripción')
+    .catch(() => data.finalDescription = repo.description || 'Sin descripción');
+
+  return Promise.all([pStatus,pPrev,pDesc]).then(() => data);
+}
+
+// 3) Renderiza tarjetas en los three carruseles
+function buildProjectLists(terminados, enProceso, abandonados) {
+  const termList = document.getElementById('terminadosList');
+  const procList = document.getElementById('enProcesoList');
+  const abanList = document.getElementById('abandonadosList');
+
+  termList.innerHTML = '';
+  procList.innerHTML = '';
+  abanList.innerHTML = '';
+
+  function makeCard(d) {
+    const link = d.repo.has_pages
+      ? `https://${USERNAME}.github.io/${d.repo.name}`
+      : d.repo.html_url;
+    const img  = d.preview ? `<img src="${d.preview}" class="repo-preview" alt="Vista previa">` : '';
+    return `
+      <div class="repo-box">
+        ${img}
+        <h3><a href="${link}" target="_blank">${d.repo.name}</a></h3>
+        <p>${d.finalDescription}</p>
+      </div>`;
+  }
+
+  terminados.forEach(d => termList.insertAdjacentHTML('beforeend', makeCard(d)));
+  enProceso.forEach(d  => procList.insertAdjacentHTML('beforeend', makeCard(d)));
+  abandonados.forEach(d=> abanList.insertAdjacentHTML('beforeend', makeCard(d)));
+}
+
+// 4) Flechas que desplazan 150px
+function setupCarouselButtons () {
+  document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+    const carousel = wrapper.querySelector('.repo-carousel');
+    const btnL     = wrapper.querySelector('.arrow-btn.left');
+    const btnR     = wrapper.querySelector('.arrow-btn.right');
+
+    const update = () => {
+      btnL.disabled = carousel.scrollLeft <= 0;
+      btnR.disabled = carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 1;
     };
 
-    const checkStatus = fetch(statusUrl, { method: 'HEAD' })
-        .then(res => {
-            if (res.ok) {
-                return fetch(statusUrl)
-                    .then(r => r.text())
-                    .then(txt => {
-                        data.status = txt.trim().toLowerCase();
-                    });
-            }
-        })
-        .catch(() => {});
-
-    const checkPreview = fetch(previewUrl, { method: 'HEAD' })
-        .then(res => {
-            if (res.ok) {
-                data.preview = previewUrl;
-            }
-        })
-        .catch(() => {});
-
-    const checkDescription = fetch(descUrl, { method: 'HEAD' })
-        .then(res => {
-            if (res.ok) {
-                return fetch(descUrl).then(r => r.text()).then(txt => {
-                    data.finalDescription = txt;
-                });
-            } else {
-                data.finalDescription = repo.description ? repo.description : 'Sin descripción';
-            }
-        })
-        .catch(() => {
-            data.finalDescription = repo.description ? repo.description : 'Sin descripción';
-        });
-
-    return Promise.all([checkStatus, checkPreview, checkDescription]).then(() => {
-        if (!data.finalDescription) {
-            data.finalDescription = repo.description ? repo.description : 'Sin descripción';
-        }
-        return data;
+    /* --- CLICK --- */
+    btnL.addEventListener('click', () => {
+      carousel.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' });
     });
+    btnR.addEventListener('click', () => {
+      carousel.scrollBy({ left:  SCROLL_STEP, behavior: 'smooth' });
+    });
+
+    /* --- SINCRONIZAR --- */
+    carousel.addEventListener('scroll', update);
+    window.addEventListener('resize', update);
+
+    /* Cuando cada imagen preview termine de cargar */
+    carousel.querySelectorAll('img').forEach(img =>
+      img.complete ? null : img.addEventListener('load', update));
+
+    /* Primera sincronización */
+    update();
+  });
 }
 
-function buildProjectLists(terminados, enProceso, abandonados) {
-    const termContainer = document.getElementById('terminadosContainer');
-    const procContainer = document.getElementById('enProcesoContainer');
-    const abanContainer = document.getElementById('abandonadosContainer');
 
-    termContainer.innerHTML = '<h2>Proyectos Terminados</h2><div class="carousel-inner" id="terminadosList"></div>';
-    procContainer.innerHTML = '<h2>Proyectos en Proceso</h2><div class="carousel-inner" id="enProcesoList"></div>';
-    abanContainer.innerHTML = '<h2>Proyectos Abandonados</h2><div class="carousel-inner" id="abandonadosList"></div>';
-
-    function createRepoHTML(data) {
-        let link = data.repo.html_url;
-        if (data.repo.has_pages) {
-            link = `https://${data.repo.owner.login}.github.io/${data.repo.name}`;
-        }
-
-        let previewImg = data.preview ? `<img src="${data.preview}" alt="Vista previa" class="repo-preview" />` : '';
-
-        return `
-            <div class="repo-box">
-                ${previewImg}
-                <h3><a href="${link}" target="_blank">${data.repo.name}</a></h3>
-                <p>${data.finalDescription}</p>
-            </div>
-        `;
-    }
-
-    terminados.forEach(d => document.getElementById('terminadosList').innerHTML += createRepoHTML(d));
-    enProceso.forEach(d => document.getElementById('enProcesoList').innerHTML += createRepoHTML(d));
-    abandonados.forEach(d => document.getElementById('abandonadosList').innerHTML += createRepoHTML(d));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    loadAllProjects();
-});
+// 5) Inicializa
+document.addEventListener('DOMContentLoaded', loadAllProjects);

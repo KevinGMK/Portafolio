@@ -1,0 +1,168 @@
+.repo-box {
+  flex: 0 0 auto;            /* no grow, no shrink, width decide */
+  width: 300px;
+  background-color: #2a2a2a;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  min-height: 100px;
+}
+
+.section {
+  margin-bottom: 40px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-title {
+  margin-bottom: 12px;
+  font-size: 26px;
+  color: #f1c40f;
+  /* fijo, no se mueve */
+}
+
+.repo-carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 15px;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+  min-height: 220px;
+  width: 100%;
+  scrollbar-width: none;
+}
+
+.repo-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.repo-carousel::-webkit-scrollbar-thumb {
+  background-color: #f1c40f;
+  border-radius: 10px;
+}
+
+
+/* Imagen de vista previa */
+.repo-preview {
+  width: 100%;
+  max-width: 280px;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+/* Ajusta la apariencia del enlace del proyecto */
+.repo-box h3 a {
+  color: #f1c40f;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.repo-box h3 a:hover {
+  color: #fff;
+}
+
+.repo-box p {
+  font-size: 16px;
+  color: #ccc;
+}
+
+/* Contenedor general del carrusel con flechas */
+.carousel-wrapper {
+  display: flex;
+  gap: 25px;
+  max-width: 960px;
+  margin: 0 auto 25px;
+  padding: 0 20px; /* Añade esto */
+  justify-content: space-between; /* Añade esto */
+  min-height: 200px;
+  align-items: center;
+}
+
+
+/* Botones flecha */
+.arrow-btn {
+  width: 50px;
+  height: 60px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.1s;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.arrow-btn.left {
+  transform: rotate(180deg);
+}
+
+.arrow-top, .arrow-bottom {
+  background-color: #666;
+  height: 4px;
+  left: -5px;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+.arrow-top:after, .arrow-bottom:after {
+  background-color: #fff;
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: all 0.15s;
+}
+
+.arrow-top {
+  transform: rotate(45deg);
+  transform-origin: bottom right;
+}
+
+.arrow-top:after {
+  left: 100%;
+  right: 0;
+  transition-delay: 0s;
+}
+
+.arrow-bottom {
+  transform: rotate(-45deg);
+  transform-origin: top right;
+}
+
+.arrow-bottom:after {
+  left: 0;
+  right: 100%;
+  transition-delay: 0.15s;
+}
+
+.arrow-btn:hover .arrow-top:after {
+  left: 0;
+  transition-delay: 0.15s;
+}
+
+.arrow-btn:hover .arrow-bottom:after {
+  right: 0;
+  transition-delay: 0s;
+}
+
+.arrow-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s;
+}
+
+/* Flecha izquierda – conserva la rotación + scale al hacer clic */
+.arrow-btn.left:active {
+  transform: rotate(180deg) scale(0.95);
+}
+.slide#proyectos .section {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+}

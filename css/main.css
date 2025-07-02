@@ -125,16 +125,17 @@ p {
   
 /* Animación del header */
 @keyframes moveAndExpand {
-    0% {
-        width: 60%;
-        height: auto;
-    }
-    100% {
-        width: 70%;
-        height: 350px;
-        background: #1e1e1e;
-    }
+  0% {
+    width: 60%;
+    height: auto;
+  }
+  100% {
+    width: 70%;
+    max-width: 100%;
+    height: auto;
+  }
 }
+
   
 .header.animate {
     animation: moveAndExpand 1s ease forwards;
@@ -283,4 +284,66 @@ p{
     font-size:16px;
     color:#ccc;
     line-height:1.6;
+}
+.ultimos-proyectos {
+  margin-top: 40px;
+}
+
+.ultimos-proyectos h2 {
+  color: #f1c40f;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 800px) {
+  .header {
+    width: 95%;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .header.animate {
+    width: 95%;
+    height: auto;
+    flex-direction: column-reverse;
+  }
+
+  .photo {
+    width: 180px;
+    height: 180px;
+    margin: 0 0 15px 0;
+    border-radius: 100px;
+  }
+
+  .header.animate .photo {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 15px;
+  }
+
+  .info h1,
+  .info h4 {
+    text-align: center;
+  }
+
+  .btn {
+    display: block;
+    margin: 20px auto 0 auto;
+    width: 80%;
+    max-width: 250px;
+  }
+
+  .nav-bar ul {
+    flex-direction: row;   /* 👈 esto es clave */
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;       /* por si el texto es largo en móviles */
+    gap: 20px;
+    padding: 0;
+  }
+
+  .carousel {
+    padding: 10px;
+  }
 }

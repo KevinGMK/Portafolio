@@ -4,7 +4,7 @@ function animateHeader() {
   }
   
   function verCV() {
-    window.open('pdf/Currículum_Huayta_Kevin.pdf', '_blank');
+    window.open('pdf/CV_Huayta_Kevin.pdf', '_blank');
   }
   
   document.addEventListener('DOMContentLoaded', () => {
